@@ -1,0 +1,1573 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Prism · 工程</title>
+  <style>
+    :root{
+      --bg:#06110f; --bg2:#0a1815; --card:rgba(13,28,25,.78); --card2:rgba(17,38,34,.62);
+      --line:rgba(123,255,209,.15); --line2:rgba(255,255,255,.075);
+      --text:#eafff8; --muted:#8fb2aa; --muted2:#6f9188;
+      --green:#48f2b4; --blue:#67b7ff; --yellow:#ffd166; --red:#ff6b7a; --purple:#a98cff;
+      --radius:22px; --shadow:0 18px 70px rgba(0,0,0,.34);
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;min-height:100%;font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif;color:var(--text);
+      background:
+        radial-gradient(circle at 16% 4%,rgba(42,220,157,.16),transparent 32%),
+        radial-gradient(circle at 85% 12%,rgba(81,145,255,.11),transparent 30%),
+        radial-gradient(circle at 70% 95%,rgba(61,255,203,.08),transparent 34%),
+        linear-gradient(145deg,var(--bg),var(--bg2) 48%,#040807);
+      background-attachment:fixed}
+    body:before{content:"";position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.014) 1px,transparent 1px);background-size:34px 34px;mask-image:linear-gradient(to bottom,rgba(0,0,0,.55),transparent 74%)}
+    .app{width:min(1260px,calc(100% - 28px));margin:auto;padding:20px 0 58px}
+    .top{display:flex;justify-content:space-between;gap:14px;align-items:center;padding:8px 0 18px;position:sticky;top:0;z-index:3;backdrop-filter:blur(18px)}
+    .brand{display:flex;align-items:center;gap:12px;min-width:0}
+    .logo{width:42px;height:42px;border-radius:15px;background:radial-gradient(circle at 33% 23%,rgba(255,255,255,.75),transparent 19%),linear-gradient(135deg,#34f4ad,#4cb7ff 58%,#a88bff);box-shadow:0 0 42px rgba(52,244,173,.2)}
+    h1{font-size:20px;margin:0;letter-spacing:.1px}.brand p{margin:3px 0 0;color:var(--muted);font-size:12px}
+    .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}.nav a,.pill{color:var(--text);text-decoration:none;border:1px solid var(--line);background:rgba(13,31,28,.68);padding:8px 10px;border-radius:999px;font-size:12px;white-space:nowrap}.pill.green{color:var(--green)}.pill.yellow{color:var(--yellow)}.pill.red{color:var(--red)}.pill.blue{color:var(--blue)}
+    .grid{display:grid;gap:14px}.hero{grid-template-columns:1.45fr .85fr}.two{grid-template-columns:1fr 1fr}.three{grid-template-columns:1.05fr .95fr .95fr}
+    .card{border:1px solid var(--line);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),var(--card);border-radius:var(--radius);box-shadow:var(--shadow);backdrop-filter:blur(18px);overflow:hidden}.in{padding:18px}.eyebrow{color:var(--green);font-size:12px;letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px}.title{font-size:clamp(30px,4vw,52px);line-height:1.04;margin:0 0 12px;letter-spacing:-1.2px}.title span{color:var(--green)}.copy{color:var(--muted);font-size:14px;line-height:1.72;max-width:760px;margin:0}
+    .metrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px}.metric{border:1px solid var(--line2);background:rgba(6,18,16,.44);border-radius:16px;padding:12px;min-height:86px}.label{color:var(--muted2);font-size:12px;margin-bottom:8px}.value{font-size:24px;font-weight:790;letter-spacing:-.4px}.sub{color:var(--muted);font-size:12px;margin-top:6px;line-height:1.45}
+    .head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:14px}.head h2{font-size:16px;margin:0}.head small{color:var(--muted2);font-size:12px;text-align:right}
+    .list{display:grid;gap:9px}.item{display:flex;align-items:center;justify-content:space-between;gap:12px;border:1px solid var(--line2);background:rgba(6,18,16,.34);border-radius:14px;padding:11px 12px}.item span{color:var(--muted);font-size:12px}.item b{font-size:13px;text-align:right}.green{color:var(--green)}.yellow{color:var(--yellow)}.red{color:var(--red)}.blue{color:var(--blue)}
+    .barline{margin-top:14px}.barTop{display:flex;justify-content:space-between;color:var(--muted);font-size:12px;margin-bottom:8px}.bar{height:12px;border-radius:999px;background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.08);overflow:hidden}.bar>div{height:100%;width:0;background:linear-gradient(90deg,var(--green),var(--blue));box-shadow:0 0 20px rgba(72,242,180,.28);transition:width .5s ease}
+    .days{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.day{border:1px solid var(--line2);background:rgba(7,17,15,.42);border-radius:16px;padding:12px;min-height:98px}.day b{display:block;font-size:14px;margin-bottom:6px}.day span{font-size:12px;color:var(--muted);line-height:1.45}.day.待验证{border-color:rgba(255,209,102,.26);background:rgba(255,209,102,.065)}.day.pass{border-color:rgba(72,242,180,.28);background:rgba(72,242,180,.07)}.day.lock{opacity:.78}
+    .phaseMap{display:grid;grid-template-columns:repeat(5,1fr);gap:9px}.phase{border:1px solid var(--line2);background:var(--card2);border-radius:16px;padding:12px;min-height:122px}.phase h3{font-size:14px;margin:0 0 7px}.phase p{font-size:12px;line-height:1.52;color:var(--muted);margin:0}.phase.now{border-color:rgba(255,209,102,.28)}.phase.done{border-color:rgba(72,242,180,.28)}.phase.lock{border-color:rgba(255,107,122,.22)}
+    .tag{display:inline-block;margin-top:10px;border:1px solid var(--line2);border-radius:999px;padding:5px 8px;font-size:11px;color:var(--muted)}.tag.pass{color:var(--green);border-color:rgba(72,242,180,.28)}.tag.wait{color:var(--yellow);border-color:rgba(255,209,102,.28)}.tag.lock{color:var(--red);border-color:rgba(255,107,122,.25)}.tag.info{color:var(--blue);border-color:rgba(103,183,255,.25)}
+    .flow{display:grid;gap:10px}.flowrow{display:grid;grid-template-columns:1fr 26px 1fr;gap:8px;align-items:center}.box{border:1px solid var(--line2);background:rgba(10,25,22,.52);border-radius:16px;padding:12px}.box strong{display:block;font-size:13px;margin-bottom:5px}.box span{display:block;color:var(--muted);font-size:12px;line-height:1.5}.arrow{text-align:center;color:var(--muted2);font-weight:900}
+    .warn{border:1px solid rgba(255,209,102,.22);background:rgba(255,209,102,.07);color:#ffe3a1;padding:12px;border-radius:16px;font-size:12px;line-height:1.62}.danger{border-color:rgba(255,107,122,.22);background:rgba(255,107,122,.065);color:#ffc5cc}.ok{border-color:rgba(72,242,180,.22);background:rgba(72,242,180,.065);color:#bdfde6}
+    .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}.foot{color:var(--muted2);font-size:12px;line-height:1.6;text-align:center;margin-top:14px}
+    @media(max-width:1000px){.hero,.two,.three{grid-template-columns:1fr}.metrics{grid-template-columns:repeat(2,1fr)}.phaseMap{grid-template-columns:1fr 1fr}.days{grid-template-columns:repeat(3,1fr)}.top{position:relative;align-items:flex-start}}
+    @media(max-width:560px){.app{width:min(100% - 18px,1260px);padding-top:10px}.top{display:block}.nav{justify-content:flex-start;flex-wrap:nowrap;overflow:auto;margin-top:12px;padding-bottom:4px}.metrics,.phaseMap,.days{grid-template-columns:1fr}.in{padding:14px}.flowrow{grid-template-columns:1fr}.arrow{transform:rotate(90deg)}}
+  
+
+:root{
+  --bg:#07100f!important;
+  --bg2:#0a1815!important;
+  --card:rgba(13,28,25,.76)!important;
+  --card2:rgba(17,38,35,.62)!important;
+  --line:rgba(123,255,209,.14)!important;
+  --line2:rgba(255,255,255,.075)!important;
+  --text:#eafff8!important;
+  --muted:#9db7b0!important;
+  --muted2:#7fa39a!important;
+  --green:#4af2b5!important;
+  --blue:#67b7ff!important;
+  --yellow:#ffd166!important;
+  --red:#ff6b7a!important;
+  --purple:#a98cff!important;
+  --radius:20px!important;
+  --shadow:0 18px 60px rgba(0,0,0,.26)!important;
+}
+*,*::before,*::after{box-sizing:border-box}
+html,body{
+  max-width:100%;
+  overflow-x:hidden;
+  color:var(--text)!important;
+  background:
+    radial-gradient(circle at 12% -8%,rgba(34,211,238,.12),transparent 30%),
+    radial-gradient(circle at 86% 0,rgba(16,185,129,.12),transparent 28%),
+    linear-gradient(145deg,#07100f,#0a1815 48%,#040807)!important;
+  background-attachment:fixed!important;
+}
+body:before{
+  opacity:.55!important;
+  filter:saturate(.9)!important;
+}
+.app{max-width:1440px!important;padding:20px 18px 30px!important}
+.top{
+  background:linear-gradient(180deg,rgba(4,18,17,.88),rgba(4,11,13,.74))!important;
+  border:1px solid rgba(123,255,209,.12)!important;
+  border-radius:20px!important;
+  box-shadow:0 18px 60px rgba(0,0,0,.26)!important;
+  backdrop-filter:blur(16px);
+}
+.brand{min-width:0}
+.logo.prism-logo{
+  width:46px!important;
+  height:46px!important;
+  padding:0!important;
+  border-radius:13px!important;
+  border:1px solid rgba(34,211,238,.32)!important;
+  background:rgba(6,18,16,.50)!important;
+  overflow:hidden!important;
+  box-shadow:inset 0 0 0 1px rgba(255,255,255,.035), 0 0 24px rgba(34,211,238,.09)!important;
+}
+.logo.prism-logo:before,
+.logo.prism-logo:after{display:none!important}
+.logo.prism-logo img{
+  width:100%;
+  height:100%;
+  display:block;
+  object-fit:cover;
+  object-position:center;
+  filter:saturate(.9) contrast(1.04) brightness(.92);
+}
+h1{
+  color:#f0fffb!important;
+  font-size:22px!important;
+  letter-spacing:-.45px!important;
+}
+.brand p,
+.copy,
+small,
+.label,
+.sub,
+.eyebrow,
+.mono,
+.phase p,
+.warn,
+.item span{
+  color:var(--muted)!important;
+}
+.nav a{
+  background:rgba(6,18,16,.42)!important;
+  border-color:rgba(123,255,209,.14)!important;
+  color:#bfe8df!important;
+  box-shadow:none!important;
+}
+.nav a:hover{
+  border-color:rgba(74,242,181,.32)!important;
+  background:rgba(16,185,129,.08)!important;
+  color:#eafff8!important;
+}
+.card,
+.metric,
+.phase,
+.day,
+.item,
+.warn,
+.timeline,
+.block,
+.guard,
+.apiCard{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012)),
+    rgba(13,28,25,.72)!important;
+  border-color:rgba(123,255,209,.14)!important;
+  box-shadow:0 18px 60px rgba(0,0,0,.26)!important;
+  backdrop-filter:blur(16px);
+}
+.card:before,
+.metric:before,
+.phase:before,
+.day:before{
+  opacity:.18!important;
+  filter:saturate(.9)!important;
+}
+.card .in{min-width:0!important}
+.head h2,
+.title,
+.value,
+.phase h3,
+.day b,
+.item b{
+  color:#eafff8!important;
+}
+.value{
+  letter-spacing:-.55px;
+}
+.metric{
+  position:relative;
+  overflow:hidden;
+  min-height:98px!important;
+  border-radius:16px!important;
+  background:rgba(4,12,11,.42)!important;
+  border:1px solid rgba(123,255,209,.12)!important;
+}
+.metric:before{
+  content:"";
+  position:absolute;
+  inset:0;
+  background:radial-gradient(circle at 15% 0%,rgba(74,242,181,.16),transparent 58%)!important;
+  pointer-events:none;
+}
+.metric .label,
+.metric .sub{
+  position:relative;
+  z-index:1;
+}
+.metric .value{
+  position:relative;
+  z-index:1;
+  color:#ecfff8!important;
+}
+.green,.pass,.done,.tag.pass{
+  color:var(--green)!important;
+}
+.blue,.info,.tag.info{
+  color:var(--blue)!important;
+}
+.yellow,.wait,.tag.wait{
+  color:var(--yellow)!important;
+}
+.red,.fail,.danger{
+  color:var(--red)!important;
+}
+.purple{
+  color:var(--purple)!important;
+}
+.tag,
+.pill,
+.badge,
+.phase span,
+.day span{
+  border-color:rgba(123,255,209,.14)!important;
+  background:rgba(6,18,16,.42)!important;
+  color:#c8ddd8!important;
+  box-shadow:none!important;
+  border-radius:999px!important;
+}
+.tag.pass{
+  color:var(--green)!important;
+  border-color:rgba(74,242,181,.28)!important;
+  background:rgba(74,242,181,.09)!important;
+}
+.tag.info{
+  color:var(--blue)!important;
+  border-color:rgba(103,183,255,.28)!important;
+  background:rgba(103,183,255,.08)!important;
+}
+.tag.wait{
+  color:var(--yellow)!important;
+  border-color:rgba(255,209,102,.28)!important;
+  background:rgba(255,209,102,.08)!important;
+}
+.tag.lock,
+.lock{
+  color:var(--muted2)!important;
+  border-color:rgba(148,163,184,.16)!important;
+}
+.warn{
+  border-color:rgba(255,209,102,.20)!important;
+  background:rgba(255,209,102,.06)!important;
+  color:#f8dfae!important;
+}
+.bar{
+  background:rgba(148,163,184,.12)!important;
+}
+#progressBar,
+.bar div,
+.bar > span{
+  background:linear-gradient(90deg,var(--green),#67b7ff)!important;
+  box-shadow:0 0 18px rgba(74,242,181,.18)!important;
+}
+.metrics,
+.grid,
+.two,
+.hero,
+.days,
+.phaseMap,
+.list{
+  min-width:0!important;
+}
+.item{
+  box-shadow:none!important;
+}
+pre,code,.mono{
+  background:rgba(6,18,16,.34)!important;
+  border-color:rgba(123,255,209,.10)!important;
+  color:#c8ddd8!important;
+}
+table,.table-wrap{
+  background:rgba(6,18,16,.26)!important;
+  border-color:rgba(123,255,209,.10)!important;
+}
+th{
+  background:rgba(15,23,42,.96)!important;
+  color:var(--muted)!important;
+}
+td{
+  color:#dbece8!important;
+  border-color:rgba(123,255,209,.08)!important;
+}
+tr:hover td{
+  background:rgba(16,185,129,.035)!important;
+}
+hr,.sep{border-color:rgba(123,255,209,.12)!important}
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-thumb{background:rgba(74,242,181,.34)!important;border-radius:999px}
+::-webkit-scrollbar-track{background:rgba(255,255,255,.03)!important}
+*{scrollbar-color:rgba(74,242,181,.34) rgba(255,255,255,.03)!important}
+.card{border-radius:20px!important}
+.metric,.phase,.day,.item{border-radius:16px!important}
+@media(max-width:760px){
+  .app{padding:14px 10px 24px!important}
+  .top{border-radius:16px!important}
+  .logo.prism-logo{width:42px!important;height:42px!important}
+  h1{font-size:20px!important}
+}
+
+
+
+.top{
+  display:grid!important;
+  grid-template-columns:minmax(260px,1fr) auto!important;
+  grid-template-areas:
+    "brand page"
+    "section section"!important;
+  gap:12px 18px!important;
+  align-items:center!important;
+}
+.top .brand{grid-area:brand!important}
+.page-nav{
+  grid-area:page!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+}
+.section-nav{
+  grid-area:section!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+  padding-top:10px!important;
+  border-top:1px solid rgba(123,255,209,.10)!important;
+}
+.page-nav a,
+.section-nav a{
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  min-height:32px!important;
+  border-radius:999px!important;
+  padding:7px 10px!important;
+  font-size:12px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  text-decoration:none!important;
+  background:rgba(6,18,16,.42)!important;
+  border:1px solid rgba(123,255,209,.14)!important;
+  color:#bfe8df!important;
+  box-shadow:none!important;
+}
+.page-nav a:hover,
+.section-nav a:hover{
+  border-color:rgba(74,242,181,.32)!important;
+  background:rgba(16,185,129,.08)!important;
+  color:#eafff8!important;
+}
+.page-nav a.active{
+  border-color:rgba(103,183,255,.36)!important;
+  background:rgba(103,183,255,.10)!important;
+  color:#dbeafe!important;
+}
+.section-nav a{
+  color:#93b5ad!important;
+  background:rgba(4,12,11,.36)!important;
+}
+@media(max-width:980px){
+  .top{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "brand"
+      "page"
+      "section"!important;
+  }
+  .page-nav,.section-nav{
+    justify-content:flex-start!important;
+  }
+}
+
+
+
+.top{
+  padding:12px 14px!important;
+  display:grid!important;
+  grid-template-columns:minmax(280px,1fr) auto!important;
+  grid-template-areas:
+    "brand page"
+    "section section"!important;
+  row-gap:8px!important;
+  column-gap:16px!important;
+  align-items:center!important;
+  min-height:0!important;
+}
+.top .brand{
+  grid-area:brand!important;
+  display:flex!important;
+  align-items:center!important;
+  gap:12px!important;
+  min-width:0!important;
+}
+.top .brand h1{
+  line-height:1.05!important;
+  margin:0!important;
+  font-size:22px!important;
+}
+.top .brand p{
+  margin:4px 0 0!important;
+  line-height:1.25!important;
+  font-size:12px!important;
+}
+.logo.prism-logo{
+  flex:0 0 auto!important;
+}
+.page-nav{
+  grid-area:page!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-end!important;
+  gap:8px!important;
+  flex-wrap:nowrap!important;
+  min-width:0!important;
+}
+.section-nav{
+  grid-area:section!important;
+  display:flex!important;
+  align-items:center!important;
+  justify-content:flex-start!important;
+  gap:8px!important;
+  flex-wrap:wrap!important;
+  padding:8px 0 2px!important;
+  margin:0!important;
+  border-top:1px solid rgba(123,255,209,.10)!important;
+}
+.page-nav a,
+.section-nav a{
+  min-height:30px!important;
+  padding:7px 10px!important;
+  border-radius:999px!important;
+  line-height:1!important;
+  white-space:nowrap!important;
+  font-size:12px!important;
+  text-decoration:none!important;
+}
+.page-nav a{
+  min-width:auto!important;
+  color:#d6e8e3!important;
+  background:rgba(6,18,16,.38)!important;
+  border-color:rgba(123,255,209,.16)!important;
+}
+.page-nav a.active{
+  color:#dbeafe!important;
+  background:rgba(103,183,255,.11)!important;
+  border-color:rgba(103,183,255,.36)!important;
+}
+.section-nav a{
+  color:#95b7ae!important;
+  background:rgba(4,12,11,.28)!important;
+  border-color:rgba(123,255,209,.12)!important;
+}
+.page-nav a:hover,
+.section-nav a:hover{
+  transform:none!important;
+  color:#eafff8!important;
+  border-color:rgba(74,242,181,.32)!important;
+  background:rgba(16,185,129,.08)!important;
+}
+@media(max-width:1060px){
+  .top{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "brand"
+      "page"
+      "section"!important;
+    padding:12px!important;
+  }
+  .page-nav,.section-nav{
+    justify-content:flex-start!important;
+    overflow-x:auto!important;
+    flex-wrap:nowrap!important;
+    padding-bottom:4px!important;
+  }
+  .page-nav::-webkit-scrollbar,
+  .section-nav::-webkit-scrollbar{
+    height:4px!important;
+  }
+}
+@media(max-width:640px){
+  .top .brand{
+    align-items:flex-start!important;
+  }
+  .top .brand h1{
+    font-size:20px!important;
+  }
+  .top .brand p{
+    font-size:11px!important;
+  }
+  .page-nav a,.section-nav a{
+    font-size:11px!important;
+    padding:7px 9px!important;
+  }
+}
+
+
+
+.app{
+  overflow-x:hidden!important;
+}
+.top{
+  position:relative!important;
+  overflow:hidden!important;
+  margin-bottom:18px!important;
+  padding:12px 16px 14px!important;
+  min-height:auto!important;
+  max-width:100%!important;
+}
+.top:after{
+  content:"";
+  display:block;
+  clear:both;
+}
+.top .brand{
+  overflow:hidden!important;
+}
+.top .brand > div:last-child{
+  min-width:0!important;
+  overflow:hidden!important;
+}
+.top .brand h1,
+.top .brand p{
+  overflow:hidden!important;
+  text-overflow:ellipsis!important;
+  white-space:nowrap!important;
+}
+.page-nav,
+.section-nav{
+  max-width:100%!important;
+  min-width:0!important;
+  overflow-x:auto!important;
+  overflow-y:hidden!important;
+  -webkit-overflow-scrolling:touch;
+  scrollbar-width:none!important;
+}
+.page-nav::-webkit-scrollbar,
+.section-nav::-webkit-scrollbar{
+  display:none!important;
+}
+.page-nav{
+  padding-right:2px!important;
+}
+.section-nav{
+  padding:9px 0 5px!important;
+  margin-bottom:0!important;
+}
+.page-nav a,
+.section-nav a{
+  flex:0 0 auto!important;
+  box-sizing:border-box!important;
+}
+.page-nav a{
+  min-height:29px!important;
+  padding:6px 9px!important;
+  font-size:11.5px!important;
+}
+.section-nav a{
+  min-height:30px!important;
+  padding:7px 10px!important;
+  font-size:12px!important;
+}
+.hero,
+.grid.hero,
+#today{
+  margin-top:0!important;
+  clear:both!important;
+  position:relative!important;
+  z-index:1!important;
+}
+.top + .hero,
+.top + .grid.hero,
+.top + #today{
+  margin-top:18px!important;
+}
+@media(max-width:1180px){
+  .top{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "brand"
+      "page"
+      "section"!important;
+    row-gap:8px!important;
+  }
+  .page-nav,
+  .section-nav{
+    justify-content:flex-start!important;
+  }
+}
+@media(max-width:720px){
+  .top{
+    padding:11px 12px 13px!important;
+    margin-bottom:14px!important;
+  }
+  .top .brand h1{
+    white-space:normal!important;
+  }
+  .top .brand p{
+    white-space:normal!important;
+  }
+}
+
+
+
+.logo.prism-logo.logo-fallback{
+  display:grid!important;
+  place-items:center!important;
+}
+.logo.prism-logo.logo-fallback:after{
+  content:"Prism";
+  display:grid!important;
+  place-items:center!important;
+  width:100%;
+  height:100%;
+  color:#bff8ee;
+  font-size:9px;
+  font-weight:800;
+  letter-spacing:.2px;
+  background:rgba(6,18,16,.65);
+}
+.page-nav a{
+  font-family:ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",Arial,sans-serif!important;
+}
+.page-nav a.active{
+  color:#dbeafe!important;
+}
+@media(max-width:640px){
+  .page-nav a{
+    font-size:11px!important;
+  }
+}
+
+
+
+.phaseMap.phase-timeline-readable{
+  display:grid!important;
+  grid-template-columns:1fr!important;
+  gap:10px!important;
+}
+.phaseMap.phase-timeline-readable .phase-row{
+  display:grid!important;
+  grid-template-columns:minmax(0,1fr) auto!important;
+  align-items:center!important;
+  gap:14px!important;
+  min-height:94px!important;
+  padding:16px 16px!important;
+  border-radius:16px!important;
+}
+.phaseMap.phase-timeline-readable .phase-main{
+  min-width:0!important;
+}
+.phaseMap.phase-timeline-readable .phase-main h3{
+  margin:0 0 6px!important;
+  font-size:16px!important;
+  line-height:1.25!important;
+  white-space:normal!important;
+}
+.phaseMap.phase-timeline-readable .phase-main p{
+  margin:0!important;
+  font-size:13px!important;
+  line-height:1.65!important;
+  color:var(--muted)!important;
+  white-space:normal!important;
+  overflow-wrap:break-word!important;
+  word-break:normal!important;
+  max-width:720px!important;
+}
+.phaseMap.phase-timeline-readable .tag{
+  justify-self:end!important;
+  align-self:center!important;
+  max-width:160px!important;
+  white-space:normal!important;
+  text-align:center!important;
+  line-height:1.25!important;
+  padding:7px 10px!important;
+}
+@media(max-width:760px){
+  .phaseMap.phase-timeline-readable .phase-row{
+    grid-template-columns:1fr!important;
+    gap:10px!important;
+    align-items:start!important;
+  }
+  .phaseMap.phase-timeline-readable .tag{
+    justify-self:start!important;
+  }
+}
+
+
+
+.item span,
+.item b,
+.metric .label,
+.metric .sub,
+.day span,
+.phase-main p,
+.foot{
+  word-break:normal!important;
+  overflow-wrap:anywhere!important;
+}
+.tag{
+  min-width:max-content;
+}
+@media(max-width:760px){
+  .tag{min-width:0}
+}
+
+
+
+.section-nav{display:none!important}
+.top{
+  grid-template-columns:minmax(260px,1fr) auto!important;
+  grid-template-areas:"brand page"!important;
+  row-gap:0!important;
+  padding-bottom:12px!important;
+}
+.page-nav{
+  grid-area:page!important;
+}
+.visually-hidden{
+  position:absolute!important;
+  width:1px!important;
+  height:1px!important;
+  padding:0!important;
+  margin:-1px!important;
+  overflow:hidden!important;
+  clip:rect(0,0,0,0)!important;
+  white-space:nowrap!important;
+  border:0!important;
+}
+@media(max-width:1180px){
+  .top{
+    grid-template-columns:1fr!important;
+    grid-template-areas:
+      "brand"
+      "page"!important;
+    row-gap:8px!important;
+  }
+}
+
+
+
+:root{
+  --prism-scroll-track:rgba(6,18,16,.42);
+  --prism-scroll-thumb:rgba(74,242,181,.48);
+  --prism-scroll-thumb-hover:rgba(103,183,255,.58);
+}
+*{
+  scrollbar-width:thin!important;
+  scrollbar-color:var(--prism-scroll-thumb) var(--prism-scroll-track)!important;
+}
+::-webkit-scrollbar{
+  width:8px!important;
+  height:8px!important;
+}
+::-webkit-scrollbar-track{
+  background:var(--prism-scroll-track)!important;
+  border-radius:999px!important;
+}
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(74,242,181,.62),rgba(16,185,129,.42))!important;
+  border:2px solid rgba(6,18,16,.78)!important;
+  border-radius:999px!important;
+}
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,rgba(103,183,255,.70),rgba(74,242,181,.55))!important;
+}
+
+
+
+:root{
+  
+  --prism-bg:#070b0f;
+  --prism-bg-2:#0b1117;
+  --prism-bg-3:#050709;
+
+  
+  --prism-surface:rgba(15,23,30,.78);
+  --prism-surface-2:rgba(18,27,35,.64);
+  --prism-surface-3:rgba(10,15,20,.72);
+
+  
+  --prism-border:rgba(148,163,184,.15);
+  --prism-border-strong:rgba(148,163,184,.22);
+  --prism-border-soft:rgba(255,255,255,.07);
+
+  
+  --prism-text:#eff8f7;
+  --prism-text-soft:#cbd5d8;
+  --prism-muted:#9aa9ad;
+  --prism-muted-2:#7f8d91;
+
+  
+  --prism-blue:#7dd3fc;
+  --prism-blue-2:#67b7ff;
+  --prism-blue-bg:rgba(125,211,252,.10);
+  --prism-blue-border:rgba(125,211,252,.34);
+
+  
+  --prism-success:#34d399;
+  --prism-success-2:#86efac;
+  --prism-success-bg:rgba(22,163,74,.07);
+  --prism-success-border:rgba(134,239,172,.22);
+
+  --prism-danger:#fb7185;
+  --prism-danger-2:#fda4af;
+  --prism-danger-bg:rgba(251,113,133,.07);
+  --prism-danger-border:rgba(251,113,133,.24);
+
+  --prism-warn:#facc15;
+  --prism-warn-2:#fde68a;
+  --prism-warn-bg:rgba(250,204,21,.06);
+  --prism-warn-border:rgba(250,204,21,.22);
+
+  --prism-purple:#c4b5fd;
+
+  
+  --prism-shadow:0 16px 52px rgba(0,0,0,.30);
+  --prism-shadow-soft:0 12px 36px rgba(0,0,0,.22);
+  --prism-radius:18px;
+  --prism-radius-sm:12px;
+
+  
+  --prism-scroll-track:rgba(8,13,16,.72);
+  --prism-scroll-thumb:rgba(148,163,184,.38);
+  --prism-scroll-thumb-hover:rgba(125,211,252,.54);
+}
+
+
+html,
+body{
+  background:var(--prism-bg);
+  color:var(--prism-text);
+}
+
+body{
+  background:
+    radial-gradient(circle at 12% -8%,rgba(125,211,252,.09),transparent 30%),
+    radial-gradient(circle at 86% 0,rgba(196,181,253,.055),transparent 28%),
+    linear-gradient(145deg,var(--prism-bg),var(--prism-bg-2) 52%,var(--prism-bg-3));
+}
+
+
+.top,
+.top-bar,
+.prism-top,
+.prism-header{
+  background:linear-gradient(180deg,rgba(8,13,16,.94),rgba(7,10,13,.82))!important;
+  border-bottom:1px solid rgba(148,163,184,.13)!important;
+  box-shadow:0 18px 60px rgba(0,0,0,.24)!important;
+  backdrop-filter:blur(16px) saturate(1.12)!important;
+  -webkit-backdrop-filter:blur(16px) saturate(1.12)!important;
+}
+
+
+.card,
+.metric,
+.panel,
+.glass,
+.stat,
+.tile{
+  background:
+    linear-gradient(180deg,rgba(255,255,255,.043),rgba(255,255,255,.012)),
+    var(--prism-surface)!important;
+  border:1px solid var(--prism-border)!important;
+  border-radius:var(--prism-radius)!important;
+  box-shadow:var(--prism-shadow)!important;
+  backdrop-filter:blur(14px)!important;
+  -webkit-backdrop-filter:blur(14px)!important;
+}
+
+.card h2,
+.panel h2,
+.section-title,
+.prism-title{
+  color:var(--prism-text)!important;
+}
+
+
+.pill,
+.nav a,
+.prism-nav a,
+.prism-nav .pill{
+  background:rgba(12,18,22,.58)!important;
+  border:1px solid rgba(148,163,184,.16)!important;
+  color:var(--prism-text-soft)!important;
+}
+
+.pill.active,
+.nav a.active,
+.prism-nav a.active,
+.prism-nav .pill.active{
+  border-color:var(--prism-blue-border)!important;
+  background:var(--prism-blue-bg)!important;
+  color:#dff7ff!important;
+}
+
+
+.pill.ok,
+.tag.good,
+.good,
+.up{
+  color:var(--prism-success-2)!important;
+}
+
+.pill.warn,
+.tag.warn,
+.warn,
+.warn-t{
+  color:var(--prism-warn-2)!important;
+}
+
+.pill.danger,
+.tag.bad,
+.bad,
+.down{
+  color:var(--prism-danger-2)!important;
+}
+
+.tag.good,
+.pill.ok{
+  background:var(--prism-success-bg)!important;
+  border-color:var(--prism-success-border)!important;
+}
+
+.tag.warn,
+.pill.warn{
+  background:var(--prism-warn-bg)!important;
+  border-color:var(--prism-warn-border)!important;
+}
+
+.tag.bad,
+.pill.danger{
+  background:var(--prism-danger-bg)!important;
+  border-color:var(--prism-danger-border)!important;
+}
+
+
+.table-wrap{
+  background:rgba(10,15,20,.38)!important;
+  border:1px solid rgba(148,163,184,.12)!important;
+}
+
+table thead th,
+th{
+  background:linear-gradient(180deg,rgba(125,211,252,.075),rgba(10,15,20,.70))!important;
+  color:#cbd5d8!important;
+  border-bottom:1px solid rgba(148,163,184,.18)!important;
+}
+
+td{
+  background:rgba(10,15,20,.14)!important;
+  border-bottom:1px solid rgba(148,163,184,.08)!important;
+}
+
+tbody tr:hover td{
+  background:rgba(125,211,252,.045)!important;
+}
+
+
+.news-item,
+.list-item,
+.reason,
+.detail-box,
+.node,
+.field,
+.candidate{
+  background:rgba(10,15,20,.38)!important;
+  border:1px solid rgba(148,163,184,.13)!important;
+}
+
+.node.active,
+.news-item:hover,
+.list-item:hover{
+  background:rgba(125,211,252,.08)!important;
+  border-color:rgba(125,211,252,.30)!important;
+}
+
+
+.metric:before,
+.stat:before,
+.tile:before{
+  background:radial-gradient(circle at 15% 0%,rgba(125,211,252,.10),transparent 58%)!important;
+}
+
+
+*{
+  scrollbar-width:thin!important;
+  scrollbar-color:var(--prism-scroll-thumb) var(--prism-scroll-track)!important;
+}
+
+::-webkit-scrollbar{
+  width:8px!important;
+  height:8px!important;
+}
+
+::-webkit-scrollbar-track{
+  background:var(--prism-scroll-track)!important;
+  border-radius:999px!important;
+}
+
+::-webkit-scrollbar-thumb{
+  background:linear-gradient(180deg,rgba(148,163,184,.48),rgba(71,85,105,.42))!important;
+  border:2px solid rgba(8,13,16,.78)!important;
+  border-radius:999px!important;
+}
+
+::-webkit-scrollbar-thumb:hover{
+  background:linear-gradient(180deg,rgba(125,211,252,.58),rgba(148,163,184,.50))!important;
+}
+
+
+.prism-neutralized-border{
+  border-color:var(--prism-border)!important;
+}
+
+
+
+
+:root{
+  --green:#34d399!important;
+  --blue:#7dd3fc!important;
+  --yellow:#fde68a!important;
+  --red:#fb7185!important;
+  --purple:#c4b5fd!important;
+  --bg:#070b0f!important;
+  --bg2:#0b1117!important;
+  --card:rgba(15,23,30,.78)!important;
+  --card2:rgba(18,27,35,.64)!important;
+  --line:rgba(148,163,184,.15)!important;
+  --line2:rgba(255,255,255,.07)!important;
+  --text:#eff8f7!important;
+  --muted:#9aa9ad!important;
+  --muted2:#7f8d91!important;
+  --shadow:0 16px 52px rgba(0,0,0,.30)!important;
+  --radius:22px!important;
+}
+
+body{
+  background:
+    radial-gradient(circle at 12% -8%,rgba(125,211,252,.09),transparent 30%),
+    radial-gradient(circle at 86% 0,rgba(196,181,253,.055),transparent 28%),
+    linear-gradient(145deg,#070b0f,#0b1117 52%,#050709)!important;
+  background-attachment:fixed!important;
+  color:#eff8f7!important;
+}
+
+.app{width:min(1360px,calc(100vw - 280px))!important}
+
+.top{backdrop-filter:blur(16px)!important}
+.brand-logo{border:1px solid rgba(125,211,252,.32)!important}
+h1{color:#eff8f7!important;letter-spacing:.1px!important}
+.brand p{color:#9aa9ad!important}
+
+
+.nav a,.pill{
+  border:1px solid rgba(148,163,184,.16)!important;
+  background:rgba(12,18,22,.58)!important;
+  color:#cbd5d8!important;
+}
+.pill.active,.nav a.active{
+  border-color:rgba(125,211,252,.34)!important;
+  background:rgba(125,211,252,.10)!important;
+  color:#dff7ff!important;
+}
+
+
+.card{background:linear-gradient(180deg,rgba(255,255,255,.043),rgba(255,255,255,.012)),rgba(15,23,30,.78)!important;border:1px solid rgba(148,163,184,.15)!important;border-radius:var(--radius,22px)!important;box-shadow:0 16px 52px rgba(0,0,0,.30)!important}
+.card h2{color:#eff8f7!important}
+
+
+.prism-phase-strip{background:linear-gradient(180deg,rgba(125,211,252,.04),rgba(255,255,255,.012)),rgba(15,23,30,.78)!important;border:1px solid rgba(148,163,184,.15)!important}
+
+
+.phase-block{border:1px solid rgba(148,163,184,.12)!important;background:rgba(10,15,20,.30)!important;border-radius:16px!important}
+
+
+.tag{background:rgba(12,18,22,.58)!important;border:1px solid rgba(148,163,184,.16)!important;color:#cbd5d8!important}
+.tag.good{color:#86efac!important;border-color:rgba(134,239,172,.22)!important;background:rgba(22,163,74,.07)!important}
+.tag.warn{color:#fde68a!important;border-color:rgba(250,204,21,.22)!important;background:rgba(250,204,21,.06)!important}
+.tag.bad{color:#fda4af!important;border-color:rgba(251,113,133,.24)!important;background:rgba(251,113,133,.07)!important}
+
+
+.up,.good{color:#86efac!important}
+.down,.bad{color:#fda4af!important}
+.warn,.warn-t{color:#fde68a!important}
+.muted{color:#9aa9ad!important}
+
+
+@media(max-width:1440px){.app{width:calc(100vw - 120px)!important}}
+@media(max-width:1280px){.app{width:calc(100vw - 72px)!important}}
+@media(max-width:760px){.app{width:calc(100vw - 28px)!important}}
+
+
+
+
+h1{
+  font-size:28px;
+  font-weight:820;
+  line-height:1.05;
+  letter-spacing:-0.035em;
+  color:var(--prism-text, var(--text, #e5edf5));
+}
+.sub{
+  font-size:13px;
+  font-weight:500;
+  line-height:1.55;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+.card h2{
+  font-size:15.5px;
+  font-weight:780;
+  line-height:1.25;
+  letter-spacing:-0.012em;
+  color:var(--prism-text, var(--text, #e5edf5));
+}
+.card-kicker,.action-kicker,.phase-kicker,.section-kicker{
+  font-size:10.5px;
+  font-weight:720;
+  line-height:1.2;
+  letter-spacing:.08em;
+  color:var(--prism-muted-2, var(--muted2, #71849b));
+  opacity:.92;
+}
+.metric .value,.field .value,.stat-value,.big-value,.kpi-value{
+  font-size:25px;
+  font-weight:830;
+  line-height:1.05;
+  letter-spacing:-0.04em;
+  color:var(--prism-text, var(--text, #e5edf5));
+  font-variant-numeric:tabular-nums;
+}
+.mini-value,.secondary-value,.metric .sub-value{
+  font-size:16px;
+  font-weight:720;
+  line-height:1.2;
+  color:var(--prism-text-soft, var(--textSoft, #c7d2df));
+  font-variant-numeric:tabular-nums;
+}
+.metric .label,.field .label,.stat-label{
+  font-size:11.5px;
+  font-weight:560;
+  line-height:1.35;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+.reason,.detail-box,.card p,.summary{
+  font-size:12.5px;
+  font-weight:480;
+  line-height:1.58;
+  color:var(--prism-text-soft, var(--textSoft, #c7d2df));
+}
+.news-summary,.description{
+  font-size:12.5px;
+  font-weight:470;
+  line-height:1.58;
+  color:var(--prism-text-soft, var(--textSoft, #c7d2df));
+}
+.muted,.small,.news-meta,.time{
+  font-size:11px;
+  font-weight:460;
+  line-height:1.45;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+.source,.footer-note{
+  font-size:11px;
+  font-weight:460;
+  line-height:1.45;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+.pill,.tag,.role-chip,.status-chip,.mini-pill{
+  font-size:10.8px;
+  font-weight:700;
+  line-height:1.25;
+  letter-spacing:.015em;
+}
+th{
+  font-size:11px;
+  font-weight:740;
+  line-height:1.35;
+  letter-spacing:.035em;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+td{
+  font-size:12px;
+  font-weight:500;
+  line-height:1.45;
+  color:var(--prism-text-soft, var(--textSoft, #c7d2df));
+}
+td.num,.num,.money,.price,.pct{
+  font-variant-numeric:tabular-nums;
+  font-weight:650;
+}
+.news-title{
+  font-size:13.8px;
+  font-weight:780;
+  line-height:1.42;
+  letter-spacing:-0.01em;
+  color:var(--prism-text, var(--text, #e5edf5));
+}
+.news-tickers .tag{
+  font-size:10.5px;
+  font-weight:720;
+}
+.node-title,.node .title{
+  font-size:13px;
+  font-weight:760;
+  line-height:1.3;
+  color:var(--prism-text, var(--text, #e5edf5));
+}
+.node-meta,.node .meta{
+  font-size:11px;
+  font-weight:460;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+.node-body,.node .body{
+  font-size:12px;
+  font-weight:480;
+  line-height:1.55;
+  color:var(--prism-text-soft, var(--textSoft, #c7d2df));
+}
+.action-title,.action-symbol{
+  font-size:18px;
+  font-weight:820;
+  line-height:1.15;
+  letter-spacing:-0.025em;
+  color:var(--prism-text, var(--text, #e5edf5));
+}
+.phase-value,.stage-value,.progress-value{
+  font-size:18px;
+  font-weight:800;
+  line-height:1.15;
+  color:var(--prism-text, var(--text, #e5edf5));
+  font-variant-numeric:tabular-nums;
+}
+.boundary-note,.readonly-note{
+  font-size:12px;
+  font-weight:520;
+  line-height:1.5;
+  color:var(--prism-muted, var(--muted, #93a4b8));
+}
+
+
+.card,.panel,.glass-card,.temp-card,.watch-card,.ai-panel{
+  background:linear-gradient(180deg,rgba(15,23,42,.72),rgba(8,13,20,.58));
+  border-color:rgba(100,116,139,.24);
+  box-shadow:0 18px 58px rgba(0,0,0,.28);
+}
+.metric,.field,.candidate,.gate,.tech-mini{
+  background-color:rgba(15,23,42,.34);
+  border-color:rgba(100,116,139,.20);
+}
+.action-ticket,.reason,.detail-box,.summary{
+  background:linear-gradient(180deg,rgba(15,23,42,.48),rgba(8,13,20,.36));
+  border-color:rgba(96,165,250,.18);
+}
+.table-wrap,table,thead,tbody{
+  border-color:rgba(100,116,139,.18);
+}
+th,td{
+  border-color:rgba(100,116,139,.16);
+}
+.tag,.role-chip,.status-chip,.mini-pill,.meta-chip,.source-chip{
+  background-color:rgba(15,23,42,.42);
+  border-color:rgba(100,116,139,.22);
+}
+.pill:not(.active):not(.ok):not(.danger){
+  background-color:rgba(15,23,42,.48);
+  border-color:rgba(100,116,139,.24);
+}
+.pill.active{
+  background-color:rgba(59,130,246,.16);
+  border-color:rgba(96,165,250,.48);
+  color:#dbeafe;
+}
+.watch-card:hover,.temp-card:hover,.card:hover{
+  border-color:rgba(96,165,250,.28);
+  box-shadow:0 18px 62px rgba(15,23,42,.34);
+}
+.section-title,.card-title,.node-title{
+  color:var(--prism-text,#e5edf5);
+}
+.muted,.small,.news-meta,.source,.footer-note{
+  color:var(--prism-muted,#93a4b8);
+  opacity:.88;
+}
+.news-card,.news-item,.node,.phase-card,.milestone{
+  background:linear-gradient(180deg,rgba(15,23,42,.52),rgba(8,13,20,.38));
+  border-color:rgba(100,116,139,.20);
+}
+.market-health-card,.health-metric,.supply-card,.factor-card{
+  background:linear-gradient(180deg,rgba(15,23,42,.52),rgba(8,13,20,.36));
+  border-color:rgba(100,116,139,.22);
+}
+.status-ok,.state-ok,.health-ok,.fresh,.profit,.up{
+  color:#4af2b5;
+}
+.status-warn,.state-stale,.state-empty,.pending{
+  color:#ffd166;
+}
+.status-error,.state-error,.failed,.loss{
+  color:#ff6b7a;
+}
+
+
+
+.eod-viewer-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:14px}.eod-wide{grid-column:1/-1}.eod-kv{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.eod-mini{border:1px solid var(--line2);background:rgba(6,18,16,.34);border-radius:14px;padding:10px;min-width:0}.eod-mini span{display:block;color:var(--muted);font-size:11px;margin-bottom:6px}.eod-mini b{display:block;font-size:14px;word-break:break-word}.status-pass{color:var(--green)!important}.status-fail{color:var(--red)!important}.status-warn{color:var(--yellow)!important}.status-unknown{color:var(--muted2)!important}.eod-matrix{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.matrix-cell{border:1px solid var(--line2);background:rgba(6,18,16,.34);border-radius:14px;padding:11px;line-height:1.5}.matrix-cell b{display:block;font-size:12px;margin-bottom:6px}.matrix-cell span{font-size:12px;color:var(--muted)}.failure-box{border:1px solid var(--line2);background:rgba(6,18,16,.34);border-radius:14px;padding:12px;white-space:pre-wrap;line-height:1.58;color:var(--muted);font-size:12px;max-height:360px;overflow:auto}.eod-boundary{border:1px solid rgba(255,209,102,.22);background:rgba(255,209,102,.07);color:#ffe3a1;border-radius:14px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px}.eod-note{color:var(--muted2);font-size:11px;line-height:1.55;margin-top:8px}@media(max-width:1000px){.eod-viewer-grid,.eod-matrix{grid-template-columns:1fr}.eod-kv{grid-template-columns:1fr}} 
+
+
+.sf-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:14px}.sf-wide{grid-column:1/-1}.sf-source-list{display:grid;gap:9px}.sf-row{border:1px solid var(--line2);background:rgba(6,18,16,.34);border-radius:14px;padding:11px;min-width:0}.sf-row-top{display:flex;justify-content:space-between;gap:10px;align-items:flex-start}.sf-name{font-weight:750;font-size:13px;word-break:break-word}.sf-meta{color:var(--muted);font-size:11px;line-height:1.55;margin-top:6px;word-break:break-word}.sf-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.sf-tag{border:1px solid var(--line2);border-radius:999px;padding:3px 7px;font-size:10px;color:var(--muted)}.sf-tag.trading{color:var(--yellow);border-color:rgba(255,209,102,.28)}.sf-tag.validation{color:var(--green);border-color:rgba(72,242,180,.28)}.sf-tag.display{color:var(--blue);border-color:rgba(103,183,255,.25)}.sf-tag.research{color:var(--purple);border-color:rgba(169,140,255,.25)}.sf-status{font-size:11px;border:1px solid var(--line2);border-radius:999px;padding:4px 8px;white-space:nowrap}.sf-status.fresh{color:var(--green);border-color:rgba(72,242,180,.28)}.sf-status.stale,.sf-status.unknown{color:var(--yellow);border-color:rgba(255,209,102,.28)}.sf-status.missing,.sf-status.critical{color:var(--red);border-color:rgba(255,107,122,.25)}.sf-boundary{border:1px solid rgba(103,183,255,.22);background:rgba(103,183,255,.07);color:#cfe9ff;border-radius:14px;padding:12px;font-size:12px;line-height:1.65;margin-top:10px}.sf-summary{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:9px}.sf-summary .eod-mini b{font-size:16px}@media(max-width:1000px){.sf-grid,.sf-summary{grid-template-columns:1fr}.sf-row-top{display:block}.sf-status{display:inline-block;margin-top:6px}} 
+</style>
+<link rel="stylesheet" href="assets/css/static-snapshot.css">
+</head>
+<body>
+  <main class="app">
+    <header class="top">
+      <div class="brand">
+        <div class="logo prism-logo"><img src="assets/images/prism-logo-light.png" alt="Prism logo" ></div>
+        <div><h1>Prism · 工程</h1><p>工程状态 · 阶段路线图 · 只读 · 不触发交易</p></div>
+      </div>
+      <nav class="nav page-nav" aria-label="Prism page navigation">
+        <a class="pill" href="monitor.html">🔮 监控</a>
+        <a class="pill" href="market.html">📈 市场</a>
+        <a class="pill" href="research.html">🧪 研究</a>
+        <a class="pill" href="index.html">🖥 状态</a>
+        <a class="pill active" href="engineering.html">🧭 工程</a>
+      <span class="pill static-demo-badge">STATIC DEMO · NO API</span></nav>
+    </header>
+
+    <section class="grid hero" id="today">
+      <article class="card">
+        <div class="in">
+          <div class="eyebrow">当前状态</div>
+          <h2 class="title">第 3c 阶段影子验证 <span id="heroProgress">0/5</span></h2>
+          <p class="copy">这页用于每天查看 Prism 工程状态：第 3c 阶段有效交易日验证、第 3d 阶段是否解锁、第 4/5/6 阶段准备进度，以及当前哪些可以动、哪些不能动。页面只读，静态展示 <span class="mono">本地静态数据</span>。</p>
+          <div class="metrics">
+            <div class="metric"><div class="label">当前阶段</div><div class="value" id="phaseName">3c</div><div class="sub">影子验证</div></div>
+            <div class="metric"><div class="label">有效进度</div><div class="value" id="progressValue">0/5</div><div class="sub" id="progressSub">第 1 日待验证 · 下一次通过后计入 1/5</div></div>
+            <div class="metric"><div class="label">建议来源</div><div class="value" id="sourceValue">V1</div><div class="sub">V2 影子对照</div></div>
+            <div class="metric"><div class="label">第 3d 阶段</div><div class="value" id="phase3dValue">NO</div><div class="sub">5/5 后人工批准</div></div>
+          </div>
+          <div class="barline"><div class="barTop"><span>第 3c 阶段有效交易日</span><span id="progressText">0%</span></div><div class="bar"><div id="progressBar"></div></div></div>
+        </div>
+      </article>
+
+      <aside class="card">
+        <div class="in">
+          <div class="head"><h2>下一次验收判断</h2><small id="lastUpdate" class="visually-hidden" aria-hidden="true">等待接口</small></div>
+          <div class="list">
+            <div class="item"><span>下一次收盘后有效验收</span><b id="nextEod">2026-06-12 05:30 CST</b></div>
+            <div class="item"><span>当日是否计入</span><b id="dayAccepted">否 / 待定</b></div>
+            <div class="item"><span>最终判定</span><b id="finalDecision">第 1/5 日未计入 / 待定</b></div>
+            <div class="item"><span>适配器错误</span><b id="adapterErrors">-</b></div>
+            <div class="item"><span>降级次数</span><b id="fallbackCount">-</b></div>
+            <div class="item"><span>建议新鲜度</span><b id="freshness">已过期</b></div>
+          </div>
+          <div class="warn" style="margin-top:14px">网页仅记录，不下单。实盘动作仍需先在券商 App 执行，再回 Prism 回填。</div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="card" id="days" style="margin-top:14px">
+      <div class="in">
+        <div class="head"><h2>第 3c 阶段 · 第 1–5 日验证格子</h2><small>只有计划任务收盘后验收通过才点亮</small></div>
+        <div class="days" id="dayGrid">
+          <div class="day 待验证"><b>第 1 日</b><span>待验证<br>下一次通过后计入 1/5</span></div>
+          <div class="day lock"><b>第 2 日</b><span>锁定<br>等待第 1 日</span></div>
+          <div class="day lock"><b>第 3 日</b><span>锁定<br>等待第 2 日</span></div>
+          <div class="day lock"><b>第 4 日</b><span>锁定<br>等待第 3 日</span></div>
+          <div class="day lock"><b>第 5 日</b><span>锁定<br>等待第 4 日</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="grid two" style="margin-top:14px">
+      <article class="card" id="phases">
+        <div class="in">
+          <div class="head"><h2>工程阶段总览</h2><small>456 可以准备，但不进主链</small></div>
+          <div class="phaseMap phase-timeline-readable">
+            <div class="phase done phase-row">
+              <div class="phase-main">
+                <h3>第 0–3b 阶段</h3>
+                <p>Recommendation V2 对象、双写、Store、Adapter 已完成。</p>
+              </div>
+              <span class="tag pass">已完成</span>
+            </div>
+            <div class="phase now phase-row">
+              <div class="phase-main">
+                <h3>第 3c 阶段</h3>
+                <p>5 个有效交易日影子验证。当前重置后从 0/5 开始。</p>
+              </div>
+              <span class="tag wait" id="phase3cTag">0/5</span>
+            </div>
+            <div class="phase lock phase-row">
+              <div class="phase-main">
+                <h3>第 3d 阶段</h3>
+                <p>Dashboard Active 开关。必须 5/5 后人工批准，保留 V1 回退。</p>
+              </div>
+              <span class="tag lock">锁定</span>
+            </div>
+            <div class="phase phase-row">
+              <div class="phase-main">
+                <h3>第 4 阶段</h3>
+                <p>Yahoo 回退、log_decision、价格源健康、卖出链路安全。</p>
+              </div>
+              <span class="tag info">仅设计</span>
+            </div>
+            <div class="phase phase-row">
+              <div class="phase-main">
+                <h3>第 5/6 阶段</h3>
+                <p>研究层、CAPM、三/四因子、R:R、WQ101、Qlib、非线性预测。</p>
+              </div>
+              <span class="tag info">影子蓝图</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="in">
+          <div class="head"><h2>第 4/5/6 阶段准备进度</h2><small>只读 / 文档 / 蓝图</small></div>
+          <div class="list">
+            <div class="item"><span>第 4 阶段 Yahoo 回退设计</span><b class="green">准备稿已落盘</b></div>
+            <div class="item"><span>第 4 阶段 log_decision 修复方案</span><b class="yellow">方案阶段</b></div>
+            <div class="item"><span>第 5 阶段研究层蓝图</span><b class="green">准备稿已落盘</b></div>
+            <div class="item"><span>CAPM / 三因子 / 四因子 / R:R</span><b class="blue">字段设计</b></div>
+            <div class="item"><span>第 6 阶段 WQ101 / Qlib / 非线性预测</span><b class="blue">影子蓝图</b></div>
+          </div>
+          <div class="warn" style="margin-top:14px">这些可以继续设计和做只读页面，但不能影响 Recommendation 主链、风控、卖出、止损、执行。</div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid three" style="margin-top:14px">
+      <article class="card" id="api">
+        <div class="in">
+          <div class="head"><h2>只读接口链路</h2><small>页面更新来源</small></div>
+          <div class="flow">
+            <div class="flowrow"><div class="box"><strong>validation summary snapshot</strong><span>阶段计数与当日是否计入。</span></div><div class="arrow">→</div><div class="box"><strong>本地静态数据</strong><span>只读聚合，不写入。</span></div></div>
+            <div class="flowrow"><div class="box"><strong>shadow runtime sample</strong><span>样本数 / 首个样本 / 最后样本 / 覆盖率。</span></div><div class="arrow">→</div><div class="box"><strong>工程页面</strong><span>展示，不触发验证。</span></div></div>
+            <div class="flowrow"><div class="box"><strong>runtime config + strategy config</strong><span>V2 配置一致性。</span></div><div class="arrow">→</div><div class="box"><strong>每日复核</strong><span>防止 shadow/active 漂移。</span></div></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="in">
+          <div class="head"><h2>V2 配置一致性</h2><small>当前应全部 shadow</small></div>
+          <div class="list">
+            <div class="item"><span>runtime config DASHBOARD</span><b id="envDash">shadow</b></div>
+            <div class="item"><span>runtime config RECOMMENDATION</span><b id="envRec">shadow</b></div>
+            <div class="item"><span>strategy DASHBOARD</span><b id="strategyDash">shadow</b></div>
+            <div class="item"><span>strategy RECOMMENDATION</span><b id="strategyRec">shadow</b></div>
+            <div class="item"><span>一致性</span><b id="configConsistency" class="green">YES</b></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="card" id="guards">
+        <div class="in">
+          <div class="head"><h2>当前硬约束</h2><small>不可破坏 3c 验证</small></div>
+          <div class="list">
+            <div class="item"><span>不切 active</span><b class="red">锁定</b></div>
+            <div class="item"><span>不改 auto_trade.py</span><b class="red">锁定</b></div>
+            <div class="item"><span>不改 execute_trade / check_trading_actions</span><b class="red">锁定</b></div>
+            <div class="item"><span>不改卖出 / 止损 / 风控</span><b class="red">锁定</b></div>
+            <div class="item"><span>不修 Yahoo fallback 生产代码</span><b>第 4 阶段后</b></div>
+            <div class="item"><span>研究层不接主链</span><b>只读 / 影子</b></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section class="grid two" style="margin-top:14px">
+      <article class="card">
+        <div class="in">
+          <div class="head"><h2>最新 EOD 验收摘要</h2><small id="reportDate">暂无正式验证日</small></div>
+          <div class="list">
+            <div class="item"><span>影子样本数</span><b id="sampleCount">-</b></div>
+            <div class="item"><span>首个时间戳</span><b id="firstTs">-</b></div>
+            <div class="item"><span>最后时间戳</span><b id="lastTs">-</b></div>
+            <div class="item"><span>覆盖率</span><b id="coverage">-</b></div>
+            <div class="item"><span>P0 / P1 / P2</span><b><span id="p0">-</span> · <span id="p1">-</span> · <span id="p2">-</span></b></div>
+            <div class="item"><span>最终判定</span><b id="reportFinal">第 1/5 日未计入 / 待定</b></div>
+          </div>
+        </div>
+      </article>
+      <article class="card">
+        <div class="in">
+          <div class="head"><h2>每日人工检查顺序</h2><small>收到报告后只看这 6 项</small></div>
+          <div class="list">
+            <div class="item"><span>1. 是否由计划任务收盘后自动触发</span><b>是？</b></div>
+            <div class="item"><span>2. 是否未被去重 / flock 跳过</span><b>是？</b></div>
+            <div class="item"><span>3. 影子覆盖是否完整</span><b>是？</b></div>
+            <div class="item"><span>4. P0 / P1 是否通过</span><b>通过？</b></div>
+            <div class="item"><span>5. 适配器错误 / 降级次数是否为 0</span><b>0?</b></div>
+            <div class="item"><span>6. 最终判定是否计入</span><b>是？</b></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+
+    <section class="card" id="phase3cEodViewer" style="margin-top:14px">
+      <div class="in">
+        <div class="head"><h2>Phase 3c 验证结果观察器</h2><small>Production Validator + Validator v2 Shadow Compare · 只读</small></div>
+        <div class="eod-boundary">安全边界：clean day 只由 scheduled EOD + production validator 决定；Validator v2 当前仅为 shadow compare，不参与 clean-day 计数；手动运行不计数；本页面不触发交易、不修改 Phase 3c、不替换 production validator。</div>
+        <div class="eod-viewer-grid">
+          <article class="card"><div class="in"><div class="head"><h2>当前 Phase 状态</h2><small id="eodGeneratedAt">等待接口</small></div><div class="eod-kv"><div class="eod-mini"><span>Phase</span><b id="eodPhase">Phase 3c Shadow</b></div><div class="eod-mini"><span>Clean Count</span><b id="eodCleanCount">0/5</b></div><div class="eod-mini"><span>Day Index</span><b id="eodDayIndex">Day 1</b></div><div class="eod-mini"><span>Phase 3d</span><b id="eodPhase3d" class="status-fail">locked</b></div><div class="eod-mini"><span>Next Scheduled EOD</span><b id="eodNext">--</b></div><div class="eod-mini"><span>Last Scheduled EOD</span><b id="eodLast">待下一次 scheduled EOD 生成</b></div></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>Production Validator</h2><small>生产口径 · 决定 clean day</small></div><div class="eod-kv"><div class="eod-mini"><span>P0</span><b id="eodP0" class="status-unknown">UNKNOWN</b></div><div class="eod-mini"><span>P1</span><b id="eodP1" class="status-unknown">UNKNOWN</b></div><div class="eod-mini"><span>P2</span><b id="eodP2" class="status-unknown">UNKNOWN</b></div><div class="eod-mini"><span>Clean Day Counted</span><b id="eodCounted">NO</b></div><div class="eod-mini" style="grid-column:1/-1"><span>Failure Summary</span><b id="eodProdSummary">暂无失败 / 待下一次 scheduled EOD</b></div></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>Runtime Shadow Gate</h2><small>全天运行时 gate · 不被 EOD snapshot 覆盖</small></div><div class="eod-kv"><div class="eod-mini"><span>EOD Snapshot P0/P1/P2</span><b id="eodSnapshotSummary" class="status-unknown">UNKNOWN</b></div><div class="eod-mini"><span>runtime P0 all-pass</span><b id="eodRuntimeP0" class="status-unknown">--</b></div><div class="eod-mini"><span>runtime P1 all-pass</span><b id="eodRuntimeP1" class="status-unknown">--</b></div><div class="eod-mini"><span>runtime P0 fail count</span><b id="eodRuntimeP0Fails" class="status-unknown">--</b></div><div class="eod-mini"><span>first / last runtime P0 fail</span><b id="eodRuntimeFailWindow">--</b></div><div class="eod-mini"><span>Failed Conditions</span><b id="eodFailedConditions" class="status-fail">--</b></div><div class="eod-mini" style="grid-column:1/-1"><span>Human Reason</span><b id="eodHumanReason" class="status-warn">EOD snapshot PASS does not override runtime failure</b></div></div><div class="warn" style="margin-top:12px">这不是 scheduled / dedupe / coverage / count-write bug；clean-day gate 正确要求 runtime shadow P0/P1 全天全通过。</div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>Validator v2 Shadow Compare</h2><small>解释层 · 不参与计数</small></div><div class="eod-kv"><div class="eod-mini"><span>v2 P0 Failure Count</span><b id="eodV2P0">--</b></div><div class="eod-mini"><span>Pending Orders</span><b id="eodPending">--</b></div><div class="eod-mini"><span>Account Blocker Alignment</span><b id="eodAlign">--</b></div><div class="eod-mini"><span>shadow_only Count</span><b id="eodShadowOnly">--</b></div><div class="eod-mini"><span>real_actionable Count</span><b id="eodRealAction">--</b></div><div class="eod-mini"><span>shadow_only Isolated</span><b id="eodShadowIso">--</b></div><div class="eod-mini"><span>event_display_only</span><b id="eodEventDisplay">--</b></div><div class="eod-mini"><span>event_affects_real_gate</span><b id="eodEventGate">--</b></div><div class="eod-mini" style="grid-column:1/-1"><span>Synthetic Danger Replay</span><b id="eodSynthetic">--</b></div></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>Failure Explorer</h2><small>失败解释 · 不放宽标准</small></div><div class="failure-box" id="eodFailureBox">暂无失败；等待下一次 scheduled EOD 或继续观察</div></div></article>
+          <article class="card eod-wide"><div class="in"><div class="head"><h2>判读矩阵</h2><small>说明用途 · 不影响 gating</small></div><div class="eod-matrix" id="eodMatrix"></div><div class="eod-note" id="eodCurrentInterpretation">等待下一次 scheduled EOD 生成完整结果</div></div></article>
+        </div>
+      </div>
+    </section>
+
+
+    <section class="card" id="sourceFreshnessPanel" style="margin-top:14px">
+      <div class="in">
+        <div class="head"><h2>Prism 数据源与新鲜度</h2><small>Source Trace / Freshness Panel · 只读</small></div>
+        <div class="sf-boundary">安全边界：本面板只读；不触发交易；不触发 EOD；不修改 clean-day；不修改 Phase 3c；display-only 数据不会影响 execute_trade。</div>
+        <div class="sf-summary" style="margin-top:12px">
+          <div class="eod-mini"><span>整体状态</span><b id="sfOverall" class="status-unknown">UNKNOWN</b></div>
+          <div class="eod-mini"><span>交易源</span><b id="sfTradingCount">0</b></div>
+          <div class="eod-mini"><span>验证源</span><b id="sfValidationCount">0</b></div>
+          <div class="eod-mini"><span>展示源</span><b id="sfDisplayCount">0</b></div>
+          <div class="eod-mini"><span>过期 / 缺失</span><b id="sfStaleMissing">0 / 0</b></div>
+        </div>
+        <div class="sf-grid">
+          <article class="card"><div class="in"><div class="head"><h2>交易关键数据</h2><small>trading-use</small></div><div class="sf-source-list" id="sfTradingList"></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>验证数据</h2><small>Phase 3c / Validator</small></div><div class="sf-source-list" id="sfValidationList"></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>解释层数据</h2><small>display-only / research</small></div><div class="sf-source-list" id="sfDisplayList"></div></div></article>
+          <article class="card"><div class="in"><div class="head"><h2>系统服务</h2><small>systemd read-only</small></div><div class="sf-source-list" id="sfServiceList"></div></div></article>
+          <article class="card sf-wide"><div class="in"><div class="head"><h2>告警与缺失</h2><small id="sfGeneratedAt">等待接口</small></div><div class="failure-box" id="sfWarnings">等待数据源新鲜度接口</div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <p class="foot">静态快照： <span class="mono">本地静态数据</span> 每 60 秒。此页面仅展示。</p>
+  </main>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script src="assets/js/engineering-static.js"></script>
+</body>
+</html>

@@ -1,0 +1,25 @@
+{
+  "note": "Static mock data for Prism GitHub Pages demo. No production connection.",
+  "engineering": {
+    "progress": "0/5",
+    "runtime_fail_count": 99,
+    "failed_condition": "shadow_runtime_p0_all_pass=false"
+  },
+  "market": {
+    "agent": "MASKED",
+    "indexes": [
+      "SPY demo",
+      "VIX demo",
+      "US10Y demo"
+    ]
+  },
+  "monitor": {
+    "account": "MASKED",
+    "api": "OFF",
+    "connection_status": "OFF"
+  },
+  "research": {
+    "mode": "research-only",
+    "parameter_writes": "disabled"
+  }
+}
