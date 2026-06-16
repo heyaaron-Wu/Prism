@@ -1,5 +1,7 @@
 # Prism
 
+[中文说明](README.zh-CN.md)
+
 Prism is a human-in-the-loop AI system for engineering observability, decision explainability, validation workflows, and research-oriented market monitoring.
 
 The project is designed around a simple principle: AI can help organize market signals, validation results, risk context, and operational status, but real trading decisions should remain explainable, auditable, and manually controlled.
@@ -53,6 +55,8 @@ Production secrets, broker details, server configuration, private logs, `.env` f
 
 ## Documentation
 
+English:
+
 - [Architecture](docs/architecture.md)
 - [Phase 3c Validation](docs/phase3c-validation.md)
 - [Decision Cards](docs/decision-card.md)
@@ -60,6 +64,20 @@ Production secrets, broker details, server configuration, private logs, `.env` f
 - [Frontend Pages](docs/frontend-pages.md)
 - [Safety Boundaries](docs/safety-boundaries.md)
 - [Roadmap](docs/roadmap.md)
+
+中文：
+
+- [系统架构](docs/architecture.zh-CN.md)
+- [Phase 3c 验证](docs/phase3c-validation.zh-CN.md)
+- [Decision Card 决策解释卡](docs/decision-card.zh-CN.md)
+- [Event Intelligence 事件情报](docs/event-intelligence.zh-CN.md)
+- [前端页面](docs/frontend-pages.zh-CN.md)
+- [安全边界](docs/safety-boundaries.zh-CN.md)
+- [路线图](docs/roadmap.zh-CN.md)
+
+## Bilingual maintenance policy
+
+English and Chinese documentation should be revised together. When the project status, safety boundary, validation state, or roadmap changes, both language versions should be updated in the same maintenance pass.
 
 ## License
 
