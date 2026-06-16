@@ -16,37 +16,25 @@
 <p align="center">
   <a href="README.zh-CN.md">中文</a> ·
   <a href="docs/architecture.md">Architecture</a> ·
-  <a href="docs/phase3c-validation.md">Phase 3c</a> ·
+  <a href="docs/phase3c-validation.md">Validation</a> ·
   <a href="docs/safety-boundaries.md">Safety</a> ·
   <a href="docs/roadmap.md">Roadmap</a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Phase-3c%20Shadow-blue" alt="Phase 3c Shadow" />
-  <img src="https://img.shields.io/badge/Clean%20Days-0%2F5-orange" alt="Clean Days 0/5" />
-  <img src="https://img.shields.io/badge/Mode-Human--in--the--loop-green" alt="Human-in-the-loop" />
-  <img src="https://img.shields.io/badge/Validator%20v2-Shadow%20Compare-purple" alt="Validator v2 Shadow Compare" />
-  <img src="https://img.shields.io/badge/Trading%20Chain-Protected-red" alt="Trading Chain Protected" />
+  <img src="https://img.shields.io/badge/Human--in--the--loop-AI%20System-blue" alt="Human-in-the-loop AI System" />
+  <img src="https://img.shields.io/badge/Focus-Observability-green" alt="Observability" />
+  <img src="https://img.shields.io/badge/Focus-Decision%20Explainability-purple" alt="Decision Explainability" />
+  <img src="https://img.shields.io/badge/Docs-Bilingual-lightgrey" alt="Bilingual Documentation" />
 </p>
 
 ---
 
 Prism is a human-in-the-loop AI system for engineering observability, decision explainability, validation workflows, and research-oriented market monitoring.
 
-The project is designed around a simple principle: AI can help organize market signals, validation results, risk context, and operational status, but real trading decisions should remain explainable, auditable, and manually controlled.
+The project is designed around a simple principle: AI can help organize market signals, validation results, risk context, and operational status, but real decisions should remain explainable, auditable, and manually controlled.
 
-## Current status
-
-Prism is currently in **Phase 3c Shadow validation**.
-
-- Current validation progress: `0/5` clean days
-- Real trading mode: human-in-the-loop / manual execution
-- Validator v2: shadow compare only
-- Event intelligence: display-only
-- Decision cards: explanation and observability layer
-- Production trading chain: not modified by display-only modules
-
-## What Prism does
+## Project focus
 
 Prism focuses on:
 
@@ -78,7 +66,7 @@ Public deployment URLs are intentionally not listed in this repository. Screensh
 
 ## Repository purpose
 
-This repository is currently used as a public project overview for Prism. It documents the architecture, validation process, safety boundaries, current progress, and roadmap.
+This repository is currently used as a public project overview for Prism. It documents the architecture, validation process, safety boundaries, project modules, and roadmap.
 
 Production secrets, broker details, server configuration, private logs, `.env` files, webhooks, account credentials, and sensitive trading data are intentionally excluded.
 
@@ -106,7 +94,7 @@ English:
 
 ## Bilingual maintenance policy
 
-English and Chinese documentation should be revised together. When the project status, safety boundary, validation state, or roadmap changes, both language versions should be updated in the same maintenance pass.
+English and Chinese documentation should be revised together. When the project scope, safety boundary, validation design, or roadmap changes, both language versions should be updated in the same maintenance pass.
 
 ## License
 
