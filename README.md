@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="Logo/prism-logo-light.png">
-    <source media="(prefers-color-scheme: light)" srcset="Logo/prism-logo-dark.jpg">
-    <img src="Logo/prism-logo-dark.jpg" width="180" alt="Prism logo">
+    <source media="(prefers-color-scheme: dark)" srcset="docs/Logo/prism-logo-light.png">
+    <source media="(prefers-color-scheme: light)" srcset="docs/Logo/prism-logo-dark.jpg">
+    <img src="docs/Logo/prism-logo-dark.jpg" width="180" alt="Prism logo">
   </picture>
 </p>
 
@@ -15,10 +15,11 @@
 
 <p align="center">
   <a href="README.zh-CN.md">中文</a> ·
-  <a href="docs/architecture.md">Architecture</a> ·
-  <a href="docs/phase3c-validation.md">Validation</a> ·
-  <a href="docs/safety-boundaries.md">Safety</a> ·
-  <a href="docs/roadmap.md">Roadmap</a>
+  <a href="docs/site/index.html">Static Snapshots</a> ·
+  <a href="docs/architecture/architecture.md">Architecture</a> ·
+  <a href="docs/validation/phase3c-validation.md">Validation</a> ·
+  <a href="docs/governance/safety-boundaries.md">Safety</a> ·
+  <a href="docs/governance/roadmap.md">Roadmap</a>
 </p>
 
 <p align="center">
@@ -98,11 +99,16 @@ It does not aim to:
 - treat display-only research signals as production gates,
 - let experimental validators directly affect production counting or release decisions.
 
-## Preview
+## Static frontend snapshots
 
-Screenshots and diagrams may be added after review and redaction.
+Public-safe static snapshots of the Prism frontend are available under [`docs/site/`](docs/site/index.html):
 
-Public deployment URLs are intentionally not listed in this repository.
+- [Engineering snapshot](docs/site/engineering.html)
+- [Market snapshot](docs/site/market.html)
+- [Monitor snapshot](docs/site/monitor.html)
+- [Research snapshot](docs/site/research.html)
+
+These pages are static, sanitized snapshots. They do not connect to live Prism services, broker accounts, private APIs, raw logs, or production systems.
 
 ## Repository scope
 
@@ -121,25 +127,31 @@ Excluded from this repository:
 
 ## Documentation
 
-English:
+Architecture:
 
-- [Architecture](docs/architecture.md)
-- [Phase 3c Validation](docs/phase3c-validation.md)
-- [Decision Cards](docs/decision-card.md)
-- [Event Intelligence](docs/event-intelligence.md)
-- [Frontend Pages](docs/frontend-pages.md)
-- [Safety Boundaries](docs/safety-boundaries.md)
-- [Roadmap](docs/roadmap.md)
+- [Architecture](docs/architecture/architecture.md)
+- [系统架构](docs/architecture/architecture.zh-CN.md)
 
-中文：
+Validation:
 
-- [系统架构](docs/architecture.zh-CN.md)
-- [Phase 3c 验证](docs/phase3c-validation.zh-CN.md)
-- [Decision Card 决策解释卡](docs/decision-card.zh-CN.md)
-- [Event Intelligence 事件情报](docs/event-intelligence.zh-CN.md)
-- [前端页面](docs/frontend-pages.zh-CN.md)
-- [安全边界](docs/safety-boundaries.zh-CN.md)
-- [路线图](docs/roadmap.zh-CN.md)
+- [Phase 3c Validation](docs/validation/phase3c-validation.md)
+- [Phase 3c 验证](docs/validation/phase3c-validation.zh-CN.md)
+
+Modules:
+
+- [Decision Cards](docs/modules/decision-card.md)
+- [Decision Card 决策解释卡](docs/modules/decision-card.zh-CN.md)
+- [Event Intelligence](docs/modules/event-intelligence.md)
+- [Event Intelligence 事件情报](docs/modules/event-intelligence.zh-CN.md)
+- [Frontend Pages](docs/modules/frontend-pages.md)
+- [前端页面](docs/modules/frontend-pages.zh-CN.md)
+
+Governance:
+
+- [Safety Boundaries](docs/governance/safety-boundaries.md)
+- [安全边界](docs/governance/safety-boundaries.zh-CN.md)
+- [Roadmap](docs/governance/roadmap.md)
+- [路线图](docs/governance/roadmap.zh-CN.md)
 
 ## Bilingual maintenance policy
 
