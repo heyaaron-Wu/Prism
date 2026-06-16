@@ -1,0 +1,18 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Prism · Engineering</title>
+  <link rel="stylesheet" href="assets/prism-pages.css" />
+</head>
+<body>
+  <nav class="nav"><div class="wrap nav-inner"><a class="brand" href="index.html"><img src="../Logo/prism-logo-light.png" alt="Prism" />Prism</a><div class="links"><a href="index.html">Home</a><a class="active" href="engineering.html">Engineering</a><a href="market.html">Market</a><a href="monitor.html">Monitor</a><a href="research.html">Research</a><a href="../README.md">Docs</a></div></div></nav>
+  <main>
+    <section class="hero"><div class="wrap hero-grid"><div><div class="kicker">Engineering observability</div><h1>Validation without hidden shortcuts.</h1><p class="lead">A public-safe static view of Prism's engineering layer: validation design, source freshness, traceability, and review boundaries.</p></div><div class="card terminal"><div class="terminal-head"><div class="dots"><span></span><span></span><span></span></div><span>engineering/static</span></div><div class="terminal-body"><div class="line"><b>Validation</b><span>design-level view</span></div><div class="line"><b>Freshness</b><span>source visibility, no live API</span></div><div class="line"><b>Boundary</b><span>display-only modules stay separated</span></div><div class="line"><b>Review</b><span>manual human control</span></div></div></div></div></section>
+    <section class="section"><div class="wrap"><div class="section-head"><div><h2>Engineering panels</h2><p>Static cards mirror the kind of visibility Prism aims to provide.</p></div></div><div class="grid-3"><div class="module"><span class="tag">Validation</span><h3>Phase gate design</h3><p>Explains scheduled validation, runtime checks, EOD views, and why a final snapshot is not enough.</p></div><div class="module"><span class="tag">Freshness</span><h3>Source health</h3><p>Surfaces stale, missing, or degraded sources so reviewers can understand data quality.</p></div><div class="module"><span class="tag">Trace</span><h3>Audit trail</h3><p>Shows where context came from and how it should be interpreted before review.</p></div></div></div></section>
+    <section class="section"><div class="wrap"><div class="card pad"><h2>Public-safe validation chain</h2><div class="panel-list"><div class="panel-row"><strong>Scheduled validation</strong><span class="muted">Scheduled runs are treated differently from manual inspection runs.</span><span class="pill status-info">design</span></div><div class="panel-row"><strong>Runtime gate</strong><span class="muted">Runtime checks catch issues that final snapshots may not show.</span><span class="pill status-info">concept</span></div><div class="panel-row"><strong>Display-only isolation</strong><span class="muted">Research and event context cannot weaken validation authority.</span><span class="pill status-ok">boundary</span></div></div></div></div></section>
+  </main>
+  <footer class="footer"><div class="wrap">Static demo only · no live operational data</div></footer>
+</body>
+</html>
