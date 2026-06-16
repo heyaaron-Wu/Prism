@@ -1,31 +1,26 @@
-# Phase 3c Validation
+# Phase 3c Validation Design
 
-Phase 3c is Prism's current shadow validation phase.
+Phase 3c is described here as a shadow-validation design pattern inside Prism. The public documentation focuses on validation concepts and safety boundaries rather than private runtime counters, current clean-day progress, raw logs, or operational incident details.
 
-The goal is to observe whether the system can pass a full validation day under strict production-style conditions before any later phase is considered.
+## Purpose
 
-## Current status
+Phase-style validation is used to prevent an AI-assisted system from moving too quickly from observation into stronger operational confidence.
 
-```text
-Phase: 3c Shadow
-Clean day progress: 0/5
-Phase 3d: locked
-Manual clean-day backfill: not allowed
-```
+The goal is to evaluate whether the system can maintain a full validation day under strict, production-style conditions while keeping experimental or display-only components outside production authority.
 
-## Clean-day requirements
+## Clean-day concept
 
-A clean day requires more than an end-of-day snapshot pass.
+A clean day is not simply an end-of-day status message. It is a stricter acceptance concept that requires multiple conditions to hold across the validation window.
 
-The system must satisfy:
+A public-safe clean-day design may include checks such as:
 
-- Scheduled EOD run is valid
-- Full-day coverage is valid
-- Coverage threshold is accepted
-- EOD snapshot P0/P1/P2 passes
-- Runtime shadow P0/P1 passes for the full day
-- Dedupe guard does not skip the day
-- Manual runs are not counted
+- scheduled validation run was valid,
+- full-day coverage was valid,
+- required coverage threshold was met,
+- end-of-day snapshot passed required severity checks,
+- runtime shadow checks passed across the validation window,
+- deduplication guard did not skip or double-count the day,
+- manual runs were not treated as scheduled validation evidence.
 
 ## Important distinction
 
@@ -33,47 +28,54 @@ The system must satisfy:
 EOD Snapshot PASS does not automatically mean Clean Day PASS.
 ```
 
-A prior validation result showed:
+An end-of-day snapshot can show that a final state looks acceptable, while a stricter clean-day gate may still fail because a runtime condition did not hold across the full validation window.
 
-```text
-EOD Snapshot: P0/P1/P2 PASS
-Full Day Coverage: 98.7%
-Day Counted: NO
-failed_conditions = [shadow_runtime_p0_all_pass=false]
-runtime_p0_fail_count = 99
-```
+This distinction is important because Prism treats validation as an auditable process, not a single final message.
 
-This means the day was not counted because all-day runtime shadow validation did not fully pass.
+## Runtime gate design
 
-## Runtime P0 audit result
+Runtime validation exists to detect problems that may not be visible in a final end-of-day snapshot.
 
-A runtime P0 failure explorer reviewed the 99 P0 records.
+Examples of runtime-gate concepts include:
 
-Accepted conclusion:
+- production-versus-shadow decision alignment,
+- blocker consistency,
+- stale-source handling,
+- missing-payload detection,
+- actionability checks,
+- display-only contamination checks,
+- validation trace completeness.
 
-- 99 runtime P0 records were located and verified
-- All were the same mismatch type: `V1阻断V2放行`
-- The failures were concentrated around 14:31–16:20 UTC
-- The raw FAIL lines lacked symbol payload
-- Later PASS logs from 16:24 UTC showed VZ / HSBC pending-order account blocker alignment
-- `v2_actionable_orders=[]`
-- No real V2 actionable release was found
-- No display-only feature contamination was found
-- Primary root cause: older runtime account-blocker alignment and insufficient log payload
+Public documentation describes these concepts at a design level. It does not publish private runtime failure counts, raw failure lines, internal symbols, or operational incident payloads.
 
 ## Validator v2 role
 
-Validator v2 is currently used only as a shadow compare layer.
+Validator v2 is treated as a shadow-compare layer in the public design.
 
 It does not:
 
-- Replace the production validator
-- Affect clean-day counting
-- Override production Phase 3c rules
-- Allow a day to be counted simply because v2 passes
+- replace the production validator,
+- weaken production validation rules,
+- directly count a validation day,
+- override production safety boundaries,
+- turn research-only or display-only information into production gates.
 
-## Current strategy
+## Manual-run policy
 
-The current strategy is to wait for the next scheduled EOD and observe whether both the EOD snapshot and all-day runtime shadow gate pass.
+Manual runs can be useful for debugging and inspection, but they should not be counted as scheduled validation evidence.
 
-No manual clean-day backfill should be performed.
+This prevents accidental backfilling, duplicate counting, or validation results that are not comparable with scheduled runs.
+
+## Public-scope boundary
+
+This document intentionally avoids publishing:
+
+- current clean-day progress,
+- raw validation failure counts,
+- private runtime logs,
+- production symbols or account details,
+- internal server paths,
+- broker-specific behavior,
+- private validator payloads.
+
+The purpose of this file is to explain the validation design, not to serve as a live operations report.
