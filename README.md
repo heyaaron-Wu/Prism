@@ -39,16 +39,11 @@ It does not aim to:
 - Treat display-only research signals as trading gates
 - Let experimental validators directly affect production clean-day counting
 
-## Public pages
+## Frontend views
 
-The project currently exposes public read-only views such as:
+Prism includes frontend views for engineering status, market overview, research, monitoring, and system health.
 
-- Engineering status: `https://heyaaron.asia/engineering`
-- Market dashboard: `https://heyaaron.asia/market`
-- Research lab: `https://heyaaron.asia/research`
-- System status: `https://heyaaron.asia/status`
-
-Some pages or data may be partial, delayed, or intentionally read-only.
+Public deployment URLs are intentionally not listed in this repository. Screenshots and selected documentation may be added later after review.
 
 ## Repository purpose
 
