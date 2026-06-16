@@ -30,21 +30,61 @@
 
 ---
 
-Prism is a human-in-the-loop AI system for engineering observability, decision explainability, validation workflows, and research-oriented market monitoring.
+## Overview
 
-The project is designed around a simple principle: AI can help organize market signals, validation results, risk context, and operational status, but real decisions should remain explainable, auditable, and manually controlled.
+Prism is a documentation-first public overview of a human-in-the-loop AI system for engineering observability, decision explainability, validation workflows, and research-oriented market monitoring.
+
+The project is built around a simple principle: AI can help organize signals, validation results, source context, and operational status, but important decisions should remain explainable, auditable, and manually controlled.
+
+This public repository is intended to explain the project architecture, safety boundaries, modules, and roadmap. Production secrets, private deployment details, account data, server configuration, raw logs, and sensitive operational material are intentionally excluded.
+
+## Why Prism?
+
+AI-assisted systems need more than model output. They need:
+
+- clear system observability,
+- traceable decision context,
+- validation workflows,
+- source freshness checks,
+- separation between research, simulation, and real-world review,
+- and explicit human oversight before important actions.
+
+Prism explores how these pieces can be organized into a safer and more understandable engineering system.
+
+## Core modules
+
+| Module | Purpose |
+| --- | --- |
+| Engineering Viewer | Presents validation, source freshness, and system-level observability. |
+| Decision Cards | Explains why an item appears, what context exists, and what limitations apply. |
+| Event Intelligence | Adds display-only context such as earnings, SEC events, sector signals, and ETF flow. |
+| Source Trace | Tracks where information came from and whether the source is fresh enough to trust. |
+| Research Lab | Provides a research-only environment for market observation and hypothesis tracking. |
+| Safety Boundaries | Keeps display-only information separated from production action paths. |
+
+## Architecture sketch
+
+```mermaid
+flowchart TD
+    UI[Frontend views] --> Explain[Decision and event context]
+    Explain --> Validate[Validation and freshness checks]
+    Validate --> Review[Human review boundary]
+    Research[Research-only layer] --> Explain
+    Sources[Data sources] --> Trace[Source trace and freshness]
+    Trace --> Validate
+```
 
 ## Project focus
 
 Prism focuses on:
 
-- Engineering observability for a semi-automatic AI system
-- Decision explanation cards for market candidates and holdings
-- Phase-based validation workflows
-- Runtime and EOD validation visibility
-- Source freshness and traceability
-- Event intelligence such as earnings, SEC events, sector context, and ETF flow
-- Separation between real holdings, virtual holdings, shadow candidates, research-only items, and news-only items
+- engineering observability for a semi-automatic AI system,
+- decision explanation cards for market candidates and holdings,
+- phase-based validation workflows,
+- runtime and end-of-day validation visibility,
+- source freshness and traceability,
+- event intelligence such as earnings, SEC events, sector context, and ETF flow,
+- separation between real holdings, virtual holdings, shadow candidates, research-only items, and news-only items.
 
 ## What Prism does not do
 
@@ -52,23 +92,32 @@ Prism is not positioned as a fully automatic trading bot.
 
 It does not aim to:
 
-- Automatically execute live trades without human confirmation
-- Provide financial advice
-- Replace risk management or human review
-- Treat display-only research signals as trading gates
-- Let experimental validators directly affect production clean-day counting
+- automatically execute live trades without human confirmation,
+- provide financial advice,
+- replace risk management or human review,
+- treat display-only research signals as production gates,
+- let experimental validators directly affect production counting or release decisions.
 
-## Frontend views
+## Preview
 
-Prism includes frontend views for engineering status, market overview, research, monitoring, and system health.
+Screenshots and diagrams may be added after review and redaction.
 
-Public deployment URLs are intentionally not listed in this repository. Screenshots and selected documentation may be added later after review.
+Public deployment URLs are intentionally not listed in this repository.
 
-## Repository purpose
+## Repository scope
 
-This repository is currently used as a public project overview for Prism. It documents the architecture, validation process, safety boundaries, project modules, and roadmap.
+This repository is currently documentation-first. Source code and additional artifacts may be published gradually after security, privacy, and operational review.
 
-Production secrets, broker details, server configuration, private logs, `.env` files, webhooks, account credentials, and sensitive trading data are intentionally excluded.
+Excluded from this repository:
+
+- production secrets,
+- broker details,
+- server configuration,
+- private logs,
+- `.env` files,
+- webhooks,
+- account credentials,
+- sensitive trading or operational data.
 
 ## Documentation
 
