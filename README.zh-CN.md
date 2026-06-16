@@ -1,6 +1,35 @@
-# Prism
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="Logo/prism-logo-light.png">
+    <source media="(prefers-color-scheme: light)" srcset="Logo/prism-logo-dark.jpg">
+    <img src="Logo/prism-logo-dark.jpg" width="180" alt="Prism logo">
+  </picture>
+</p>
 
-[English](README.md)
+<h1 align="center">Prism</h1>
+
+<p align="center">
+  面向工程可观测性、决策解释、验证流程和研究型市场监控的<br />
+  human-in-the-loop AI 系统。
+</p>
+
+<p align="center">
+  <a href="README.md">English</a> ·
+  <a href="docs/architecture.zh-CN.md">系统架构</a> ·
+  <a href="docs/phase3c-validation.zh-CN.md">Phase 3c</a> ·
+  <a href="docs/safety-boundaries.zh-CN.md">安全边界</a> ·
+  <a href="docs/roadmap.zh-CN.md">路线图</a>
+</p>
+
+<p align="center">
+  <img src="https://img.shields.io/badge/Phase-3c%20Shadow-blue" alt="Phase 3c Shadow" />
+  <img src="https://img.shields.io/badge/Clean%20Days-0%2F5-orange" alt="Clean Days 0/5" />
+  <img src="https://img.shields.io/badge/Mode-Human--in--the--loop-green" alt="Human-in-the-loop" />
+  <img src="https://img.shields.io/badge/Validator%20v2-Shadow%20Compare-purple" alt="Validator v2 Shadow Compare" />
+  <img src="https://img.shields.io/badge/Trading%20Chain-Protected-red" alt="Trading Chain Protected" />
+</p>
+
+---
 
 Prism 是一个 human-in-the-loop 的 AI 系统，重点关注工程可观测性、决策解释、验证流程，以及研究导向的市场监控。
 
