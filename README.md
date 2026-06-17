@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="README.zh-CN.md">中文</a> ·
-  <a href="docs/site/index.html">Static Snapshots</a> ·
+  <a href="https://heyaaron-wu.github.io/Prism/">Static Snapshots</a> ·
   <a href="docs/architecture/architecture.md">Architecture</a> ·
   <a href="docs/validation/phase3c-validation.md">Validation</a> ·
   <a href="docs/governance/safety-boundaries.md">Safety</a> ·
@@ -101,12 +101,13 @@ It does not aim to:
 
 ## Static frontend snapshots
 
-Public-safe static snapshots of the Prism frontend are available under [`docs/site/`](docs/site/index.html):
+Public-safe static snapshots of the Prism frontend are available on GitHub Pages:
 
-- [Engineering snapshot](docs/site/engineering.html)
-- [Market snapshot](docs/site/market.html)
-- [Monitor snapshot](docs/site/monitor.html)
-- [Research snapshot](docs/site/research.html)
+- [Open Prism static frontend snapshots](https://heyaaron-wu.github.io/Prism/)
+- [Engineering snapshot](https://heyaaron-wu.github.io/Prism/site/engineering.html)
+- [Market snapshot](https://heyaaron-wu.github.io/Prism/site/market.html)
+- [Monitor snapshot](https://heyaaron-wu.github.io/Prism/site/monitor.html)
+- [Research snapshot](https://heyaaron-wu.github.io/Prism/site/research.html)
 
 These pages are static, sanitized snapshots. They do not connect to live Prism services, broker accounts, private APIs, raw logs, or production systems.
 
