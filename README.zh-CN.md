@@ -1,8 +1,8 @@
 <p align="center">
   <picture>
     <source media="(prefers-color-scheme: dark)" srcset="docs/Logo/prism-logo-light.png">
-    <source media="(prefers-color-scheme: light)" srcset="docs/Logo/prism-logo-dark.jpg">
-    <img src="docs/Logo/prism-logo-dark.jpg" width="180" alt="Prism logo">
+    <source media="(prefers-color-scheme: light)" srcset="docs/Logo/prism-logo-dark.png">
+    <img src="docs/Logo/prism-logo-dark.png" width="180" alt="Prism logo">
   </picture>
 </p>
 
