@@ -15,7 +15,7 @@
 
 <p align="center">
   <a href="README.md">English</a> ·
-  <a href="docs/site/index.html">静态前端快照</a> ·
+  <a href="https://heyaaron-wu.github.io/Prism/">静态前端快照</a> ·
   <a href="docs/architecture/architecture.zh-CN.md">系统架构</a> ·
   <a href="docs/validation/phase3c-validation.zh-CN.md">验证流程</a> ·
   <a href="docs/governance/safety-boundaries.zh-CN.md">安全边界</a> ·
@@ -32,12 +32,13 @@ Prism 是一个 documentation-first 的公开项目概览，用于介绍一个�
 
 ## 静态前端快照
 
-Prism 前端的公开安全静态快照位于 [`docs/site/`](docs/site/index.html)：
+Prism 前端的公开安全静态快照已发布到 GitHub Pages：
 
-- [Engineering 快照](docs/site/engineering.html)
-- [Market 快照](docs/site/market.html)
-- [Monitor 快照](docs/site/monitor.html)
-- [Research 快照](docs/site/research.html)
+- [打开 Prism 静态前端快照](https://heyaaron-wu.github.io/Prism/)
+- [Engineering 快照](https://heyaaron-wu.github.io/Prism/site/engineering.html)
+- [Market 快照](https://heyaaron-wu.github.io/Prism/site/market.html)
+- [Monitor 快照](https://heyaaron-wu.github.io/Prism/site/monitor.html)
+- [Research 快照](https://heyaaron-wu.github.io/Prism/site/research.html)
 
 这些页面是静态、脱敏后的前端快照，不连接生产系统。
 
